@@ -3,8 +3,8 @@ class Todo {
   String title;
   String description;
   bool completed;
-  String? date; // Optional nullable field
-  String? time;  // Optional nullable field
+  String? date;
+  String? time;
 
   Todo({
     this.id,
@@ -20,7 +20,7 @@ class Todo {
       '_id': id,
       'title': title,
       'description': description,
-      'completed': completed ? 1 : 0, // Store boolean as integer
+      'completed': completed ? 1 : 0,
       'date': date,
       'time': time,
     };

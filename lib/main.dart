@@ -3,6 +3,8 @@ import 'package:aplikasi_todo_list/pages/add_todo_page.dart';
 import 'package:aplikasi_todo_list/pages/auth/login_page.dart';
 import 'package:aplikasi_todo_list/pages/auth/register_page.dart';
 import 'package:aplikasi_todo_list/pages/edit_todo_page.dart';
+import 'package:aplikasi_todo_list/pages/landing_page.dart';
+import 'package:aplikasi_todo_list/pages/profile_page.dart';
 import 'package:aplikasi_todo_list/pages/splash_screen.dart';
 import 'package:aplikasi_todo_list/pages/todo_list_page.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,8 @@ class MyApp extends StatelessWidget {
         '/splashscreen': (context) => SplashScreen(),
         '/addTodo': (context) => AddTodoPage(),
         '/editTodo': (context) => EditTodoPage(todo: ModalRoute.of(context)!.settings.arguments as Todo),
+        '/profile': (context) => ProfilePage(),
+        '/landing': (context) => MainMenuPage(),
       },
     );
   }

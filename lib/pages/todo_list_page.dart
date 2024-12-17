@@ -1,8 +1,9 @@
 import 'package:aplikasi_todo_list/helpers/database_helper.dart';
+import 'package:aplikasi_todo_list/includes/bottom_navigation_bar.dart';
 import 'package:aplikasi_todo_list/models/todo.dart';
 import 'package:aplikasi_todo_list/pages/edit_todo_page.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';  // Import untuk menangani format tanggal
+import 'package:intl/intl.dart';
 
 class TodoListPage extends StatefulWidget {
   @override
@@ -75,7 +76,20 @@ class _TodoListPageState extends State<TodoListPage> {
     setState(() {
       _selectedIndex = index;
     });
-    // Tambahkan aksi jika diperlukan, seperti navigasi ke halaman lain
+    switch (index) {
+      case 0:
+        // Navigasi ke halaman TodoList
+        Navigator.pushReplacementNamed(context, '/todoList');
+        break;
+      case 1:
+        // Navigasi ke halaman Settings
+        Navigator.pushReplacementNamed(context, '/landing');
+        break;
+      case 2:
+        // Navigasi ke halaman Profile
+        Navigator.pushReplacementNamed(context, '/profile');
+        break;
+    }
   }
 
   @override
@@ -133,23 +147,9 @@ class _TodoListPageState extends State<TodoListPage> {
           );
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Todos',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'About',
-          ),
-        ],
       ),
     );
   }
