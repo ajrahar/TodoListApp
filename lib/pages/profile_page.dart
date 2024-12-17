@@ -42,7 +42,7 @@ class _ProfilePageState extends State<ProfilePage> {
           children: [
             CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/profile_placeholder.png'), // Ganti dengan path gambar placeholder
+              backgroundImage: AssetImage('assets/images/background.png'), // Ganti dengan path gambar placeholder
             ),
             SizedBox(height: 16),
             Text(

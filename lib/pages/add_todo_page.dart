@@ -19,7 +19,7 @@ class _AddTodoPageState extends State<AddTodoPage> {
 
   void _addTodo() async {
     if (_formKey.currentState!.validate()) {
-      final formattedDate = _selectedDate != null ? DateFormat('yyyy-MM-dd').format(DateTime.parse(_selectedDate!)) : '';
+      final formattedDate = _selectedDate != null ? DateFormat('dd-MM-yyyy').format(DateTime.parse(_selectedDate!)) : '';
       final formattedTime = _selectedTime != null ? _selectedTime! : '';
 
       final newTodo = Todo(

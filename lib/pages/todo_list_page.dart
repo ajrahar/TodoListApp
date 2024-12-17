@@ -47,7 +47,7 @@ class _TodoListPageState extends State<TodoListPage> {
 
   void _editTodo(Todo todo) async {
     final now = DateTime.now();
-    final formattedDate = DateFormat('yyyy-MM-dd').format(now);
+    final formattedDate = DateFormat('dd-MM-yyyy').format(now);
     final formattedTime = DateFormat('HH:mm').format(now);
 
     final updatedTodo = Todo(
