@@ -11,6 +11,7 @@ class TodoListPage extends StatefulWidget {
 class _TodoListPageState extends State<TodoListPage> {
   final DatabaseHelper _dbHelper = DatabaseHelper.instance;
   List<Todo> _todos = [];
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -52,6 +53,18 @@ class _TodoListPageState extends State<TodoListPage> {
     _refreshTodoList();
   }
 
+  void _logout() {
+    // Implementasi logout: contoh menghapus sesi atau kembali ke halaman login
+    Navigator.pushReplacementNamed(context, '/login');
+  }
+
+    void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+    // Tambahkan aksi jika diperlukan, seperti navigasi ke halaman lain
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,6 +76,10 @@ class _TodoListPageState extends State<TodoListPage> {
             onPressed: () {
               Navigator.pushNamed(context, '/addTodo').then((_) => _refreshTodoList());
             },
+          ),
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: _logout,
           ),
         ],
       ),
@@ -93,6 +110,24 @@ class _TodoListPageState extends State<TodoListPage> {
             ),
           );
         },
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list),
+            label: 'Todos',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.info),
+            label: 'About',
+          ),
+        ],
       ),
     );
   }
