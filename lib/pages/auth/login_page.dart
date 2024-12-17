@@ -11,22 +11,21 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final UserDatabaseHelper _userDbHelper = UserDatabaseHelper.instance;
 
+  bool _isPasswordVisible = false; // Status untuk password visibility
+
   void _login() async {
     final username = _usernameController.text;
     final password = _passwordController.text;
 
     if (username.isEmpty || password.isEmpty) {
-      // Tampilkan pesan kesalahan jika ada yang kosong
       _showErrorDialog('Please enter both username and password.');
       return;
     }
 
     final user = await _userDbHelper.queryUser(username, password);
     if (user != null) {
-      // Redirect ke halaman TodoListPage jika login berhasil
       Navigator.pushReplacementNamed(context, '/todoList');
     } else {
-      // Tampilkan pesan kesalahan jika login gagal
       _showErrorDialog('Invalid username or password.');
     }
   }
@@ -62,23 +61,39 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          const Text(
-            'Todo App', // Text besar untuk judul aplikasi
-            style: TextStyle(
-              fontSize: 32, // Mengatur ukuran font menjadi 32
-              fontWeight: FontWeight.bold,
+            const Text(
+              'Todo App',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          SizedBox(height: 20),
+            SizedBox(height: 20),
             TextField(
               controller: _usernameController,
-              decoration: InputDecoration(labelText: 'Username'),
+              decoration: InputDecoration(
+                labelText: 'Username',
+              ),
             ),
             SizedBox(height: 10),
             TextField(
               controller: _passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
+              obscureText: !_isPasswordVisible, // Kontrol visibilitas password
+              decoration: InputDecoration(
+                labelText: 'Password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _isPasswordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _isPasswordVisible = !_isPasswordVisible; // Toggle visibility
+                    });
+                  },
+                ),
+              ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
