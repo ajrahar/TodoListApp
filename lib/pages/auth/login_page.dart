@@ -62,6 +62,14 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+          const Text(
+            'Todo App', // Text besar untuk judul aplikasi
+            style: TextStyle(
+              fontSize: 32, // Mengatur ukuran font menjadi 32
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 20),
             TextField(
               controller: _usernameController,
               decoration: InputDecoration(labelText: 'Username'),

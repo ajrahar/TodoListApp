@@ -1,30 +1,39 @@
 class Todo {
-  final int? id; // id sekarang bisa null dan di-set oleh database secara otomatis
-  final String title;
-  final String description;
-  final bool completed;
+  int? id;
+  String title;
+  String description;
+  bool completed;
+  String? date; // Optional nullable field
+  String? time;  // Optional nullable field
 
   Todo({
-    this.id, // id sebagai null awalnya
+    this.id,
     required this.title,
     required this.description,
-    this.completed = false, // default to false jika tidak diberikan
+    required this.completed,
+    this.date,
+    this.time,
   });
 
   Map<String, dynamic> toMap() {
     return {
+      '_id': id,
       'title': title,
       'description': description,
-      'completed': completed ? 1 : 0, // completed sebagai integer (0/1)
+      'completed': completed ? 1 : 0, // Store boolean as integer
+      'date': date,
+      'time': time,
     };
   }
 
   factory Todo.fromMap(Map<String, dynamic> map) {
     return Todo(
-      id: map['_id'], // ambil nilai id dari peta
+      id: map['_id'],
       title: map['title'],
       description: map['description'],
-      completed: map['completed'] == 1, // konversi dari integer ke boolean
+      completed: map['completed'] == 1,
+      date: map['date'],
+      time: map['time'],
     );
   }
 }

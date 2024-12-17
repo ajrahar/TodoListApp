@@ -12,6 +12,8 @@ class DatabaseHelper {
   static final columnTitle = 'title';
   static final columnDescription = 'description';
   static final columnCompleted = 'completed';
+  static final columnDate = 'date';
+  static final columnTime = 'time';
 
   DatabaseHelper._privateConstructor();
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -36,16 +38,30 @@ class DatabaseHelper {
             $columnId INTEGER PRIMARY KEY AUTOINCREMENT,
             $columnTitle TEXT NOT NULL,
             $columnDescription TEXT NOT NULL,
-            $columnCompleted INTEGER NOT NULL
+            $columnCompleted INTEGER NOT NULL,
+            $columnDate TEXT,
+            $columnTime TEXT
           )
         ''');
       },
+      onUpgrade: _upgradeDatabase,
     );
+  }
+
+  Future<void> _upgradeDatabase(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < newVersion) {
+      await db.execute('ALTER TABLE $table ADD COLUMN $columnDate TEXT');
+      await db.execute('ALTER TABLE $table ADD COLUMN $columnTime TEXT');
+    }
   }
 
   Future<int> insert(Todo todo) async {
     Database db = await instance.database;
-    return await db.insert(table, todo.toMap());
+    return await db.insert(
+      table,
+      todo.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace, // Mengatasi konflik jika ada id yang sama
+    );
   }
 
   Future<List<Todo>> queryAllTodos() async {

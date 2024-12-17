@@ -2,6 +2,7 @@ import 'package:aplikasi_todo_list/helpers/database_helper.dart';
 import 'package:aplikasi_todo_list/models/todo.dart';
 import 'package:aplikasi_todo_list/pages/edit_todo_page.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';  // Import untuk menangani format tanggal
 
 class TodoListPage extends StatefulWidget {
   @override
@@ -27,22 +28,34 @@ class _TodoListPageState extends State<TodoListPage> {
   }
 
   void _addTodo() async {
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd').format(now);
+    final formattedTime = DateFormat('HH:mm').format(now);
+
     final newTodo = Todo(
       id: 0,
       title: "New Todo",
       description: "Description",
       completed: false,
+      date: formattedDate,
+      time: formattedTime,
     );
     await _dbHelper.insert(newTodo);
     _refreshTodoList();
   }
 
   void _editTodo(Todo todo) async {
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd').format(now);
+    final formattedTime = DateFormat('HH:mm').format(now);
+
     final updatedTodo = Todo(
       id: todo.id,
       title: "Updated Title",
       description: "Updated Description",
       completed: todo.completed,
+      date: formattedDate,
+      time: formattedTime,
     );
     await _dbHelper.update(updatedTodo);
     _refreshTodoList();
@@ -58,7 +71,7 @@ class _TodoListPageState extends State<TodoListPage> {
     Navigator.pushReplacementNamed(context, '/login');
   }
 
-    void _onItemTapped(int index) {
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -89,7 +102,16 @@ class _TodoListPageState extends State<TodoListPage> {
           final todo = _todos[index];
           return ListTile(
             title: Text(todo.title),
-            subtitle: Text(todo.description),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(todo.description),
+                Text(
+                  'Tanggal: ${todo.date}, Jam: ${todo.time}', // Menampilkan tanggal dan jam yang telah diformat
+                  style: TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              ],
+            ),
             trailing: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
