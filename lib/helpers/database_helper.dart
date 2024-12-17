@@ -69,7 +69,7 @@ class DatabaseHelper {
     return await db.insert(
       table,
       todo.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace, // Mengatasi konflik jika ada id yang sama
+      conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
