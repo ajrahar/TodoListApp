@@ -1,4 +1,4 @@
-# aplikasi_todo_list
+# Aplikasi_Todo_List
 
 Aplikasi Todo List dengan bahasa pemrograman Flutter dengan database SQLite
 
