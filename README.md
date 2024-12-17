@@ -1,6 +1,6 @@
 # aplikasi_todo_list
 
-A new Flutter project.
+Aplikasi Todo List dengan bahasa pemrograman Flutter dengan database SQLite
 
 ## Getting Started
 
