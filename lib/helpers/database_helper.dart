@@ -57,11 +57,27 @@ class DatabaseHelper {
 
   Future<int> insert(Todo todo) async {
     Database db = await instance.database;
+
+    // Periksa apakah kolom `date` dan `time` ada dalam tabel sebelum melakukan INSERT
+    bool dateColumnExists = await _checkColumnExists(db, columnDate);
+    bool timeColumnExists = await _checkColumnExists(db, columnTime);
+
+    if (!dateColumnExists || !timeColumnExists) {
+      await _upgradeDatabase(db, _databaseVersion - 1, _databaseVersion);
+    }
+
     return await db.insert(
       table,
       todo.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace, // Mengatasi konflik jika ada id yang sama
     );
+  }
+
+  Future<bool> _checkColumnExists(Database db, String columnName) async {
+    List<Map<String, dynamic>> columns = await db.rawQuery(
+      "PRAGMA table_info($table)"
+    );
+    return columns.any((column) => column['name'] == columnName);
   }
 
   Future<List<Todo>> queryAllTodos() async {
